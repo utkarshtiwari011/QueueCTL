@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # dev-runner runs tests inside the development Go container environment
+  dev-tester:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: queuectl-dev-tester
+    volumes:
+      - .:/app
+    environment:
+      - CGO_ENABLED=0
+    # Runs the test suite by default
+    command: ["go", "test", "-v", "./..."]
+
+  # dev-worker runs a local worker instance mounting the code directory
+  dev-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: queuectl-dev-worker
+    volumes:
+      - .:/app
+    environment:
+      - QUEUECTL_DATABASE_PATH=/app/queue_dev.db
+      - QUEUECTL_LOGGER_LEVEL=debug
+      - QUEUECTL_LOGGER_FORMAT=console
+    # Start the worker in development
+    command: ["go", "run", "./cmd/queuectl/main.go", "worker", "start", "--queue", "default"]

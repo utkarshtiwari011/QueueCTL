@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # production worker service
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: queuectl-prod-worker
+    command: ["worker", "start", "--config", "/etc/queuectl/config.yaml"]
+    environment:
+      - QUEUECTL_DATABASE_PATH=/data/queuectl.db
+      - QUEUECTL_LOGGER_LEVEL=info
+      - QUEUECTL_LOGGER_FORMAT=json
+    volumes:
+      - ./config.yaml:/etc/queuectl/config.yaml
+      - queue-prod-data:/data
+    restart: always
+
+volumes:
+  queue-prod-data:
+    driver: local

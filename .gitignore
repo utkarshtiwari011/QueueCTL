@@ -1,0 +1,49 @@
+# Binaries and Build Artifacts
+/dist/
+/bin/
+/queuectl
+/queuectl.exe
+/queuectl-linux-amd64
+/queuectl-darwin-amd64
+/queuectl-windows-amd64.exe
+
+# SQLite Database Files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+queue.db*
+
+# Test and Coverage Reports
+*.out
+*.test
+*.prof
+coverage/
+coverage.html
+coverage.txt
+coverage.out
+
+# Process PID files
+*.pid
+worker.pid
+
+# Logs
+*.log
+logs/
+
+# IDE / Editor configuration
+.idea/
+.vscode/
+*.suo
+*.sln
+*.swp
+*.swo
+*~
+.agents/
+.gemini/
+
+# OS-specific Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini

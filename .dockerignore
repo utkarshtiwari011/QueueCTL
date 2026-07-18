@@ -1,0 +1,13 @@
+.git
+.github
+dist
+coverage.out
+coverage.html
+queue.db
+queue.db-journal
+queue.db-wal
+queue.db-shm
+*.exe
+.agents
+.gemini
+*.log

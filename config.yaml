@@ -1,0 +1,13 @@
+database:
+  path: "queue.db"
+
+logger:
+  level: "info"
+  format: "console"
+
+worker:
+  concurrency: 5
+  poll_interval: "1s"
+  max_retries: 3
+  backoff_base_delay: "2s"
+  backoff_max_delay: "30s"

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # background-worker runs the queuectl worker daemon
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: queuectl-worker
+    command: ["worker", "start", "--config", "/etc/queuectl/config.yaml"]
+    environment:
+      # Inject environment override to store SQLite DB inside the persistent volume mount
+      - QUEUECTL_DATABASE_PATH=/data/queuectl.db
+      - QUEUECTL_LOGGER_LEVEL=info
+      - QUEUECTL_LOGGER_FORMAT=json
+    volumes:
+      # Mount external configuration
+      - ./config.yaml:/etc/queuectl/config.yaml
+      # Mount shared volume directory owned by non-root user
+      - queue-data:/data
+    restart: always
+
+volumes:
+  queue-data:
+    driver: local
